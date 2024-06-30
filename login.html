@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-container .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-container .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container .form-group a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .form-container .form-group a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #87B44D;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+
+        .form-container p {
+            margin: 10px 0;
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container .error {
+            color: #ff0000;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid bg-white sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
+                <a href="index.html" class="navbar-brand">
+                    <img class="img-fluid" src="img/logo.png" alt="Logo">
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="store.html" class="nav-item nav-link">Store</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu bg-light rounded-0 m-0">
+                                <a href="feature.html" class="dropdown-item">Procedure</a>
+                                <a href="allPetsResult.html" class="dropdown-item">Browse Pets</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            </div>
+                        </div>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <div class="border-start ps-4 d-none d-lg-block">
+                        <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-2 text-dark mb-4 animated slideInDown">Login</h1>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Login Form Start -->
+    <div class="container" style="margin-top: 6rem; margin-bottom: 6rem;">
+        <div class="form-container">
+            <form id="login-form" class="form" onsubmit="handleLogIn(event)">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="login-password" required>
+                </div>
+                <p><a href="#">Forgot password?</a></p>
+                 <button type="submit" class="btn btn-primary w-100">Login</button>
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                <div id="error" class="error"></div>
+            </form>
+        </div>
+    </div>
+    <!-- Login Form End -->
+
+     <!-- Footer Start -->
+    <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-primary mb-4">PetPals</h4>
+                    <p class="mb-2">If you have any question, please contact us at</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>551 F Jhocson St, Sampaloc, Manila</p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i><a href="mailto:picantea@students.national-u.edu.ph">picantea@students.national-u.edu.ph</a></p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i><a href="mailto:penamantelr@students.national-u.edu.ph">penamantelr@students.national-u.edu.ph</a></p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <p class="mb-2">If you have any questions for PAWS, feel free to reach them out directly:</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Aurora Blvd., Katipunan Valley, Loyola Heights, Quezon City, Philippines</p>
+                    <div class="d-flex pt-3">
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://x.com/PAWSPhilippines"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.facebook.com/pawsphilippines/"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.instagram.com/pawsphilippines/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-primary mb-4">Quick Links</h4>
+                    <a class="btn btn-link" href="about.html">About Us</a>
+                    <a class="btn btn-link" href="contact.html">Contact Us</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-primary mb-4">Stay Updated</h4>
+                    <p>Sign up to get notifications</p>
+                    <div class="position-relative w-100">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; 2024 Made for a Final Semester Project.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <script>
+        function handleLogIn(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorDiv = document.getElementById('error');
+
+            // Sample user data
+            const users = [
+                {
+                    firstName: "Han",
+                    lastName: "Choi",
+                    email: "ChoiHan@example.com",
+                    password: "12345678",
+                    profilePic: "user.png"
+                },
+                {
+                    firstName: "Aliyah",
+                    lastName: "Picante",
+                    email: "kali@gmail.com",
+                    password: "1234",
+                    profilePic: "user.png"
+                },
+                {
+                    firstName: "Jane",
+                    lastName: "Smith",
+                    email: "JaneSmith@example.com",
+                    password: "jane123",
+                    profilePic: "user.png"
+                },
+                {
+                    firstName: "Jane",
+                    lastName: "Brown",
+                    email: "Smith@example.com",
+                    password: "123",
+                    profilePic: "user.png"
+                },
+                {
+                    firstName: "Josh",
+                    lastName: "Brown",
+                    email: "Josh@example.com",
+                    password: "1234",
+                    profilePic: "user.png"
+                },
+                {
+                    firstName: "Demo",
+                    lastName: "Acc",
+                    email: "demo@example.com",
+                    password: "123",
+                    profilePic: "user.png"
+                }
+            ];
+
+            const loggedInUser = users.find(user => user.email === email && user.password === password);
+            if (loggedInUser) {
+                // Storing user's full name along with other details
+                loggedInUser.fullName = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
+                localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+                window.location.href = 'index.html';
+            } else {
+                errorDiv.textContent = "Invalid email or password";
+            }
+        }
+
+        document.getElementById('login-form').addEventListener('submit', handleLogIn);
+    </script>
+</body>
+
+</html>

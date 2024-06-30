@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Pet Profile</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/homePage.css" rel="stylesheet">
+    <script src="js/pets.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const petId = parseInt(urlParams.get('id'));
+
+            const pet = pets.find(p => p.id === petId);
+
+            if (pet) {
+                document.querySelector('.pet-name').textContent = pet.name;
+                document.querySelector('.pet-age').textContent = pet.age;
+                document.querySelector('.pet-sex').textContent = pet.gender;
+                document.querySelector('.pet-history').textContent = pet.history;
+
+                const petImage = document.querySelector('.pet-image');
+                petImage.src = pet.img[0];
+                petImage.dataset.index = '0';
+                petImage.dataset.total = pet.img.length;
+            } else {
+                document.querySelector('.pet-info').innerHTML = '<p>Pet not found.</p>';
+            }
+        });
+
+        function handleInquireClick() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const petId = parseInt(urlParams.get('id'));
+            const pet = pets.find(p => p.id === petId);
+
+            if (pet) {
+                const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+                const userEmail = loggedInUser ? loggedInUser.email : null;
+                const quizCompleted = localStorage.getItem(`quizCompleted_${userEmail}`) === 'true';
+                localStorage.setItem(`selectedPet_${userEmail}`, JSON.stringify(pet));
+
+                if (quizCompleted) {
+                    window.location.href = `startInquiry.html?petId=${petId}`;
+                } else {
+                    window.location.href = `inquirePetQuiz.html?petId=${petId}`;
+                }
+            }
+        }
+
+        function previousImage() {
+            const petImage = document.querySelector('.pet-image');
+            let index = parseInt(petImage.dataset.index);
+            const total = parseInt(petImage.dataset.total);
+
+            index = (index - 1 + total) % total;
+            petImage.dataset.index = index;
+            petImage.src = pets.find(p => p.id === parseInt(new URLSearchParams(window.location.search).get('id'))).img[index];
+        }
+
+        function nextImage() {
+            const petImage = document.querySelector('.pet-image');
+            let index = parseInt(petImage.dataset.index);
+            const total = parseInt(petImage.dataset.total);
+
+            index = (index + 1) % total;
+            petImage.dataset.index = index;
+            petImage.src = pets.find(p => p.id === parseInt(new URLSearchParams(window.location.search).get('id'))).img[index];
+        }
+    </script>
+</head>
+<body>
+     <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    <!-- Spinner End -->
+
+    
+ <!-- Navbar Start -->
+   <style>
+    .icons ion-icon {
+        font-size: 24px; /* Adjust the size as needed */
+    }
+</style>
+
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+<div class="container-fluid bg-white sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-2 py-lg-0">
+            <a href="index.html" class="navbar-brand">
+                <img class="img-fluid" src="img/logo.png" alt="Logo">
+            </a>
+            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="store.html" class="nav-item nav-link">Store</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu bg-light rounded-0 m-0">
+                            <a href="allPetsResult.html" class="dropdown-item">Browse Pets</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <div class="border-start ps-4 d-none d-lg-block">
+                    <button type="button" class="btn btn-sm p-0"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="d-none d-lg-flex align-items-center ms-3 icons">
+                    <a href="favorite.html" class="btn btn-sm p-0 mx-2">
+                        <ion-icon name="heart-outline"></ion-icon>
+                    </a>
+                    <a href="login.html" class="btn btn-sm p-0 mx-2">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->
+
+    
+    <div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="pet-images position-relative">
+                    <button class="arrow left-arrow position-absolute top-50 start-0 translate-middle-y btn btn-primary" onclick="previousImage()">&#10094;</button>
+                    <img class="img-fluid pet-image" src="" alt="Pet Image">
+                    <button class="arrow right-arrow position-absolute top-50 end-0 translate-middle-y btn btn-primary" onclick="nextImage()">&#10095;</button>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-title">
+                    <h1 class="display-6 pet-name"></h1>
+                </div>
+                <p><strong>Age:</strong> <span class="pet-age"></span></p>
+                <p><strong>Sex:</strong> <span class="pet-sex"></span></p>
+                <p><strong>History:</strong> <span class="pet-history"></span></p>
+                <div class="adoption-box text-center p-3">
+                    <h4>Considering to adopt this pet?</h4>
+                    <button class="btn btn-primary inquire-button" onclick="window.location.href='inquire.html'">Inquire</button>
+                    <button class="btn btn-primary inquire-button">Favorite</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="shelter-container d-flex">
+    <div class="shelter-details box p-3">
+        <img src="pawsLogo.png" class="mx-auto d-block mb-3" alt="PAWS Logo">
+        <h2 class="text-center">PAWS</h2>
+        <p class="text-center">Philippine Animal Welfare Society</p>
+        <p class="mb-2 text-center"><i class="fa fa-map-marker-alt text-primary me-3"></i>Aurora Blvd., Katipunan Valley, Loyola Heights, Quezon City, Philippines</p>
+        <a href="https://paws.org.ph/" class="btn btn-primary d-block mx-auto mt-3" style="width:70%">More About PAWS</a>
+    </div>
+    <div class="ratio ratio-16x9">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.4072526406117!2d121.07447937431992!3d14.632808785857375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b784329550fd%3A0x55bbd6106c1c6ffb!2sPAWS%20Animal%20Rehabilitation%20Center!5e0!3m2!1sen!2sph!4v1719747738816!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</div>
+
+<!-- More Start --><div class="container-fluid product py-5 my-5">
+    <div class="container py-5">
+        <div class="section-title text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <h1 class="display-6">More Animals from PAWS</h1>
+        </div>
+        <div>
+                 <div class="pet-profile-container">
+                <!-- Pet profiles will be inserted here -->
+                <button class="more-btn" style="background-image: url('path/to/your/image.jpg');" onclick="location.href='indexPrac.html';">
+                    <span class="more-btn-text">View All</span>
+                </button>
+    
+            </div>
+           
+        </div>
+    </div>
+</div>
+<!-- More End -->
+
+    <!-- footery -->
+    <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-primary mb-4">PetPals</h4>
+                    <p class="mb-2">If you have any question, please contact us at</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>551 F Jhocson St, Sampaloc, Manila</p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i><a href="mailto:picantea@students.national-u.edu.ph">picantea@students.national-u.edu.ph</a></p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i><a href="mailto:penamantelr@students.national-u.edu.ph">penamantelr@students.national-u.edu.ph</a></p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <p class="mb-2">If you have any questions for PAWS, feel free to reach them out directly:</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Aurora Blvd., Katipunan Valley, Loyola Heights, Quezon City, Philippines</p>
+                    <div class="d-flex pt-3">
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://x.com/PAWSPhilippines"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.facebook.com/pawsphilippines/"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-primary rounded-circle me-2" href="https://www.instagram.com/pawsphilippines/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-primary mb-4">Quick Links</h4>
+                    <a class="btn btn-link" href="about.html">About Us</a>
+                    <a class="btn btn-link" href="contact.html">Contact Us</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-primary mb-4">Stay Updated</h4>
+                    <p>Sign up to get notifications</p>
+                    <div class="position-relative w-100">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; 2024 Made for a Final Semester Project.
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+       // Function to get random pets
+function getRandomPets(arr, num) {
+    const shuffled = arr.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, num);
+}
+
+// Retrieve random pets
+const randomPets = getRandomPets(pets, 2);
+
+const buttonContainer = document.querySelector('.pet-profile-container');
+buttonContainer.innerHTML = '';
+
+// Add random pet profiles
+randomPets.forEach(pet => {
+    const petButton = document.createElement('button');
+    petButton.className = 'pet-btn';
+    petButton.style.backgroundImage = `url(${pet.img[0]})`;
+    petButton.setAttribute('data-name', pet.name);
+    petButton.addEventListener('click', () => {
+        window.location.href = `petsProfile.html?id=${pet.id}`;
+    });
+
+    // Check if the pet matches the user's quiz answers
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        const userEmail = loggedInUser.email;
+        const selectedPet = JSON.parse(localStorage.getItem(`selectedPet_${userEmail}`));
+        const quizAnswers = [];
+        const numQuestions = 1 + (selectedPet === "Cat" ? 2 : 4);
+        for (let i = 0; i < numQuestions; i++) {
+            const answer = localStorage.getItem(`quizAnswer_${userEmail}_${i}`);
+            if (answer) {
+                quizAnswers.push(answer);
+            }
+        }
+
+        if (selectedPet) {
+            const petCharacteristics = [
+                pet.type,
+                pet.ageType,
+                pet.gender,
+                pet.size,
+                pet.behaviour
+            ];
+
+            let matchCount = 0;
+            for (let i = 0; i < quizAnswers.length; i++) {
+                if (quizAnswers[i] === petCharacteristics[i]) {
+                    matchCount++;
+                }
+                if (matchCount >= 2) {
+                    break; // Exit loop if two matches found
+                }
+            }
+
+            if (matchCount >= 2) {
+                const matchLabel = document.createElement('span');
+                matchLabel.textContent = 'Pet Matched!';
+                matchLabel.className = 'match-label';
+                petButton.appendChild(matchLabel);
+            }
+        }
+    }
+    buttonContainer.appendChild(petButton);
+});
+
+// Add the "View All" button
+const viewAllButton = document.createElement('button');
+viewAllButton.className = 'more-btn';
+viewAllButton.style.backgroundImage = `url('path/to/your/image.jpg')`; // Add your image path here
+viewAllButton.innerHTML = '<span class="more-btn-text">View All</span>';
+viewAllButton.addEventListener('click', () => {
+    window.location.href = 'indexPrac.html';
+});
+buttonContainer.appendChild(viewAllButton);
+
+const petListContainer = document.querySelector('.pet-list');
+if (petListContainer) {
+    petListContainer.innerHTML = '';
+
+    pets.forEach(pet => {
+        const petLink = document.createElement('a');
+        petLink.href = `petProfile.html?id=${pet.id}`;
+        petLink.textContent = pet.name;
+        petListContainer.appendChild(petLink);
+    });
+}
+  </script>
+
+  <script>
+      //FavoriteAPet
+         function toggleFavorite() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const petId = parseInt(urlParams.get('id'));
+
+            let favoritePets = JSON.parse(localStorage.getItem('favoritePets')) || [];
+            if (favoritePets.includes(petId)) {
+                favoritePets = favoritePets.filter(id => id !== petId);
+            } else {
+                favoritePets.push(petId);
+            }
+            localStorage.setItem('favoritePets', JSON.stringify(favoritePets));
+            updateFavoriteButton(favoritePets.includes(petId));
+        }
+
+        function updateFavoriteButton(isFavorite) {
+            const favoriteButton = document.querySelector('.favorite-button');
+            favoriteButton.textContent = isFavorite ? 'Unfavorite' : 'Favorite';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const petId = parseInt(urlParams.get('id'));
+            const favoritePets = JSON.parse(localStorage.getItem('favoritePets')) || [];
+            updateFavoriteButton(favoritePets.includes(petId));
+        });
+  </script>
+</body>
+</html>
